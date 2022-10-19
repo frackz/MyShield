@@ -1,12 +1,14 @@
 package handlers
 
 import (
-	"os"
 	"log"
+	"os"
 )
 
-func ReadFile() string {
-	b, err := os.ReadFile("./html/index.html")
-	if err != nil {log.Fatal(err)}
+func ReadFile(file string) string {
+	b, err := os.ReadFile("./html/" + file + ".html")
+	if err != nil {
+		log.Fatal(err)
+	}
 	return string(b)
 }

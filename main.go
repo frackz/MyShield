@@ -28,7 +28,7 @@ func main() {
 	var debug = true
 	var data = ""
 	if debug == true {
-		data = handlers.ReadFile()
+		data = handlers.ReadFile("start")
 	} else {
 		data = handlers.FromGit("start")
 	}
