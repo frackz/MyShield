@@ -1,10 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"log"
-	"net/http"
 
 	"MyShield/handlers"
 	"strings"
@@ -12,17 +9,6 @@ import (
 	"github.com/bwmarrin/discordgo"
 	"github.com/zserge/lorca"
 )
-
-type Response struct {
-	http.ResponseWriter
-}
-
-func (r *Response) Text(code int, body string) {
-	r.Header().Set("Content-Type", "text/plain")
-	r.WriteHeader(code)
-
-	io.WriteString(r, fmt.Sprintf("%s\n", body))
-}
 
 func main() {
 	var debug = true
@@ -39,7 +25,6 @@ func main() {
 	}
 	defer ui.Close()
 	// Code here
-
 	// Login
 	ui.Bind("launch", func() {
 		text := ui.Eval("document.getElementById('put').value").String()
@@ -63,19 +48,20 @@ func main() {
 			}
 			return
 		}
-		handler := http.NewServeMux()
-		handler.HandleFunc("/get/", func(w http.ResponseWriter, r *http.Request) {
-			resp := Response{w}
 
-			resp.Text(http.StatusOK, "hey")
-		})
-		httpError := http.ListenAndServe(":8080", handler)
+		newData := ""
 
-		if httpError != nil {
-			log.Fatalf(httpError.Error())
+		if debug == true {
+			newData = handlers.ReadFile("dashboard")
+		} else {
+			newData = handlers.FromGit("dashboard")
 		}
-		//fmt.Println(discord)
-		//fmt.Println(text)
+
+		ui.Load("data:text/html," + newData)
+
+		handlers.InitWeb()
+
+		handlers.StartUptime(ui)
 	})
 
 	<-ui.Done()
