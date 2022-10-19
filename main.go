@@ -1,24 +1,30 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"net/url"
+	"os"
 
 	"github.com/zserge/lorca"
 )
 
+func readFile() string {
+	b, err := os.ReadFile("./index.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	str := string(b)
+	return str
+}
+
 func main() {
-	ui, err := lorca.New("data:text/html,"+url.PathEscape(`
-	<html>
-		<head><title>MyShield</title></head>
-		<body><h1>Hello, world!</h1></body>
-	</html>
-	`), "", 480, 320)
+	fmt.Println(readFile())
+	ui, err := lorca.New("data:text/html,"+readFile(), "", 480, 320)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer ui.Close()
-	// Wait until UI window is closed
-	<-ui.Done()
+	// Code here
 
+	<-ui.Done()
 }
