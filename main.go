@@ -1,25 +1,26 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 	"log"
-	"os"
 
+	"MyShield/handlers"
 	"github.com/zserge/lorca"
 )
 
-func readFile() string {
-	b, err := os.ReadFile("./index.html")
-	if err != nil {
-		log.Fatal(err)
-	}
-	str := string(b)
-	return str
-}
-
 func main() {
-	fmt.Println(readFile())
-	ui, err := lorca.New("data:text/html,"+readFile(), "", 480, 320)
+
+	var debug = true
+
+	var data = ""
+
+	if debug == true {
+		data = handlers.ReadFile()
+	} else {
+		data = handlers.FromGit()
+	}
+
+	ui, err := lorca.New("data:text/html,"+data, "", 480, 320)
 	if err != nil {
 		log.Fatal(err)
 	}
