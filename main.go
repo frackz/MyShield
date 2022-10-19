@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"MyShield/handlers"
@@ -57,9 +58,9 @@ func main() {
 
 		ui.Load("data:text/html," + newData)
 
-		handlers.InitWeb()
-
-		handlers.StartUptime(ui)
+		go handlers.StartUptime(ui)
+		go handlers.InitWeb()
+		fmt.Printf("AFTER INIT")
 	})
 
 	<-ui.Done()

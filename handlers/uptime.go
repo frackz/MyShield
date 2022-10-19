@@ -17,7 +17,6 @@ var seconds int
 func StartUptime(ui lorca.UI) {
 	gui = ui
 	for true {
-
 		if seconds == 59 {
 			minutes += 1
 			seconds = 0
