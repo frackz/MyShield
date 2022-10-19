@@ -48,9 +48,7 @@ func main() {
 			}
 			return
 		}
-
 		newData := ""
-
 		if debug == true {
 			newData = handlers.ReadFile("dashboard")
 		} else {
