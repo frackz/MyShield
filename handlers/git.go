@@ -6,10 +6,14 @@ import (
 	"net/http"
 )
 
-func FromGit() string {
-	resp, err := http.Get("https://raw.githubusercontent.com/dkfrede/MyShield/main/index.html")
-	if err != nil {log.Fatalln(err)}
+func FromGit(file string) string {
+	resp, err := http.Get("https://raw.githubusercontent.com/dkfrede/MyShield/main/" + file + ".html")
+	if err != nil {
+		log.Fatalln(err)
+	}
 	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {log.Fatalln(err)}
+	if err != nil {
+		log.Fatalln(err)
+	}
 	return string(body)
 }

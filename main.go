@@ -30,7 +30,7 @@ func main() {
 	if debug == true {
 		data = handlers.ReadFile()
 	} else {
-		data = handlers.FromGit()
+		data = handlers.FromGit("start")
 	}
 	//fmt.Println(data)
 	ui, err := lorca.New("data:text/html,"+data, "", 800, 500)
@@ -66,6 +66,7 @@ func main() {
 		handler := http.NewServeMux()
 		handler.HandleFunc("/get/", func(w http.ResponseWriter, r *http.Request) {
 			resp := Response{w}
+
 			resp.Text(http.StatusOK, "hey")
 		})
 		httpError := http.ListenAndServe(":8080", handler)
