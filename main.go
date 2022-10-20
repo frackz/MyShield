@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"MyShield/handlers"
@@ -60,7 +59,11 @@ func main() {
 
 		go handlers.StartUptime(ui)
 		go handlers.InitWeb()
-		fmt.Printf("AFTER INIT")
+
+		handlers.AddToHistory("randy", "123")
+		handlers.AddToHistory("randy", "1234")
+		handlers.AddToHistory("randy", "1235")
+
 	})
 
 	<-ui.Done()
